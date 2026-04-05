@@ -1,8 +1,10 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect } from "react";
 import useEmblaCarousel from "embla-carousel-react";
 import Autoplay from "embla-carousel-autoplay";
+import { transformations } from "./data/transformations";
 
 const facilities = [
 	{
@@ -73,6 +75,8 @@ const facilities = [
 ];
 
 export default function HomePage() {
+	const featuredTransformations = transformations.slice(0, 3);
+
 	const [emblaRef, emblaApi] = useEmblaCarousel(
 		{
 			loop: true,
@@ -282,6 +286,7 @@ export default function HomePage() {
 					<nav className="main-nav">
 						<a href="#packages">Memberships</a>
 						<a href="#facilities">Facilities</a>
+						<Link href="/transformations">Hall of Fame</Link>
 						<a href="#timings">Timings</a>
 						<a href="#cta" className="nav-join-btn">
 							Join Now
@@ -424,6 +429,45 @@ export default function HomePage() {
 									</div>
 								))}
 							</div>
+						</div>
+					</div>
+				</section>
+
+				<section
+					className="section transformations-preview"
+					id="transformations-home">
+					<div className="container">
+						<div className="section-head-row fade-up">
+							<div>
+								<h2 className="section-title text-left">
+									Transformation Hall of Fame
+								</h2>
+								<p className="section-subtitle">
+									A few real stories from members who stayed consistent.
+								</p>
+							</div>
+							<Link href="/transformations" className="btn secondary">
+								View All
+							</Link>
+						</div>
+
+						<div className="transformations-grid">
+							{featuredTransformations.map((person) => (
+								<article
+									key={person.id}
+									className="transformation-card fade-up">
+									<img
+										src={person.image}
+										alt={`${person.name} transformation`}
+									/>
+									<div className="transformation-content">
+										<h3>{person.name}</h3>
+										<p>
+											<span>{person.result}</span> in {person.duration}
+										</p>
+									</div>
+								</article>
+							))}
 						</div>
 					</div>
 				</section>

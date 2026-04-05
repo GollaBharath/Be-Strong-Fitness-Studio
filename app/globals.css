@@ -589,9 +589,235 @@ h4 {
 	align-items: center;
 }
 
+.section-head-row {
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-end;
+	gap: 2rem;
+	margin-bottom: 2rem;
+}
+
+.section-subtitle {
+	color: var(--text-muted);
+	max-width: 520px;
+	margin-top: 0.5rem;
+}
+
+.transformations-preview {
+	padding-top: 6rem;
+	background: radial-gradient(
+		circle at 20% 10%,
+		rgba(0, 179, 164, 0.08) 0%,
+		var(--bg) 60%
+	);
+}
+
+.transformations-grid {
+	display: grid;
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	gap: 1.5rem;
+}
+
+.transformation-card {
+	background: var(--card-bg);
+	border: 1px solid var(--card-border);
+	border-radius: 18px;
+	overflow: hidden;
+	transition:
+		transform 0.3s ease,
+		box-shadow 0.3s ease,
+		border-color 0.3s ease;
+}
+
+.transformation-card:hover {
+	transform: translateY(-8px);
+	box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+	border-color: rgba(255, 255, 255, 0.2);
+}
+
+.transformation-card img {
+	width: 100%;
+	height: 280px;
+	object-fit: cover;
+	display: block;
+}
+
+.transformation-content {
+	padding: 1.2rem 1rem 1.4rem;
+	border-top: 1px solid var(--card-border);
+	background: linear-gradient(to top, rgba(0, 179, 164, 0.05), transparent);
+}
+
+.transformation-content h3 {
+	font-size: 1.2rem;
+	margin-bottom: 0.35rem;
+}
+
+.transformation-content p {
+	font-size: 0.95rem;
+	color: #d8d8d8;
+}
+
+.transformation-content span {
+	color: var(--primary);
+	font-weight: 700;
+}
+
+.btn.secondary {
+	background: rgba(255, 255, 255, 0.08);
+	color: var(--text);
+	border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.btn.secondary:hover {
+	transform: translateY(-3px);
+	background: rgba(255, 255, 255, 0.14);
+	border-color: rgba(255, 255, 255, 0.34);
+}
+
+.hall-page {
+	min-height: 100vh;
+	background: radial-gradient(
+		circle at 15% 5%,
+		rgba(0, 179, 164, 0.18) 0%,
+		var(--bg) 45%
+	);
+}
+
+.hall-header {
+	padding: 6rem 0 2rem;
+	border-bottom: 1px solid var(--card-border);
+	background: linear-gradient(
+		to bottom,
+		rgba(255, 255, 255, 0.04),
+		rgba(255, 255, 255, 0)
+	);
+}
+
+.hall-header-inner {
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-end;
+	gap: 1.5rem;
+	flex-wrap: wrap;
+}
+
+.hall-kicker {
+	text-transform: uppercase;
+	letter-spacing: 0.16em;
+	color: var(--primary);
+	font-size: 0.78rem;
+	font-weight: 700;
+	margin-bottom: 0.6rem;
+}
+
+.hall-header h1 {
+	font-size: clamp(2rem, 4vw, 3.3rem);
+	line-height: 1.12;
+	margin-bottom: 0.5rem;
+}
+
+.hall-header p {
+	color: var(--text-muted);
+}
+
+.hall-actions {
+	display: flex;
+	gap: 0.8rem;
+	flex-wrap: wrap;
+}
+
+.hall-section {
+	padding-top: 3.5rem;
+	padding-bottom: 6rem;
+	background: transparent;
+}
+
+.hall-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+	gap: 1.5rem;
+	align-items: stretch;
+}
+
+.hall-card {
+	background: var(--card-bg);
+	border: 1px solid var(--card-border);
+	border-radius: 22px;
+	overflow: hidden;
+	transition:
+		transform 0.3s ease,
+		box-shadow 0.3s ease;
+}
+
+.hall-card:hover {
+	transform: translateY(-8px);
+	box-shadow: 0 16px 34px rgba(0, 0, 0, 0.4);
+}
+
+.hall-card img {
+	display: block;
+	width: 100%;
+	height: 340px;
+	object-fit: cover;
+}
+
+.hall-card-content {
+	padding: 1.2rem;
+	background: linear-gradient(to top, rgba(0, 179, 164, 0.08), transparent);
+	border-top: 1px solid var(--card-border);
+}
+
+.hall-card-content h3 {
+	font-size: 1.35rem;
+	margin-bottom: 0.9rem;
+}
+
+.hall-card-content ul {
+	list-style: none;
+	display: grid;
+	gap: 0.5rem;
+}
+
+.hall-card-content li {
+	display: flex;
+	justify-content: space-between;
+	gap: 1rem;
+	font-size: 0.96rem;
+	padding-bottom: 0.5rem;
+	border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.hall-card-content li:last-child {
+	padding-bottom: 0;
+	border-bottom: 0;
+}
+
+.hall-card-content span {
+	color: var(--text-muted);
+}
+
+.hall-card-content strong {
+	font-weight: 600;
+	text-align: right;
+}
+
 @media (max-width: 900px) {
 	.dual-col {
 		grid-template-columns: 1fr;
+	}
+	.section-head-row {
+		flex-direction: column;
+		align-items: flex-start;
+	}
+	.transformations-grid {
+		grid-template-columns: 1fr;
+	}
+	.transformation-card img {
+		height: 230px;
+	}
+	.hall-card img {
+		height: 280px;
 	}
 }
 
