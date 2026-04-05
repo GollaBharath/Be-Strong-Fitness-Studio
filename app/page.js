@@ -287,6 +287,7 @@ export default function HomePage() {
 						<a href="#packages">Memberships</a>
 						<a href="#facilities">Facilities</a>
 						<Link href="/transformations">Hall of Fame</Link>
+						<Link href="/login">Login</Link>
 						<a href="#timings">Timings</a>
 						<a href="#cta" className="nav-join-btn">
 							Join Now

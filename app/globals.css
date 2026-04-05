@@ -802,6 +802,240 @@ h4 {
 	text-align: right;
 }
 
+.auth-page {
+	min-height: 100vh;
+	padding: 8rem 0 4rem;
+	background: radial-gradient(
+		circle at 10% 10%,
+		rgba(0, 179, 164, 0.16) 0%,
+		var(--bg) 55%
+	);
+}
+
+.auth-shell {
+	display: grid;
+	grid-template-columns: 1.1fr 1fr;
+	gap: 2rem;
+	align-items: center;
+}
+
+.auth-copy h1 {
+	font-size: clamp(2rem, 4vw, 3.4rem);
+	line-height: 1.12;
+	margin-bottom: 0.75rem;
+}
+
+.auth-copy p {
+	color: var(--text-muted);
+	max-width: 50ch;
+}
+
+.auth-card {
+	background: rgba(255, 255, 255, 0.04);
+	border: 1px solid var(--card-border);
+	border-radius: 20px;
+	padding: 1rem;
+	backdrop-filter: blur(8px);
+}
+
+.auth-switch {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 0.5rem;
+	margin-bottom: 1rem;
+}
+
+.auth-switch button {
+	background: transparent;
+	color: var(--text-muted);
+	border: 1px solid var(--card-border);
+	border-radius: 12px;
+	padding: 0.6rem 0.9rem;
+	font-weight: 700;
+	cursor: pointer;
+	transition: all 0.2s ease;
+}
+
+.auth-switch button.active {
+	color: var(--text);
+	border-color: var(--primary);
+	box-shadow: 0 0 20px rgba(0, 179, 164, 0.2);
+}
+
+.auth-form {
+	display: grid;
+	gap: 0.85rem;
+}
+
+.auth-form label {
+	display: grid;
+	gap: 0.35rem;
+	font-size: 0.92rem;
+	color: var(--text-muted);
+}
+
+.auth-form input {
+	width: 100%;
+	background: rgba(255, 255, 255, 0.06);
+	border: 1px solid rgba(255, 255, 255, 0.14);
+	border-radius: 12px;
+	padding: 0.72rem 0.8rem;
+	color: var(--text);
+	font: inherit;
+}
+
+.auth-form input:focus {
+	outline: none;
+	border-color: var(--primary);
+	box-shadow: 0 0 0 3px rgba(0, 179, 164, 0.2);
+}
+
+.auth-error {
+	color: #ff9d9d;
+	font-size: 0.9rem;
+}
+
+.auth-error.muted {
+	color: var(--text-muted);
+	margin-bottom: 0.6rem;
+}
+
+.auth-submit {
+	width: 100%;
+	margin-top: 0.2rem;
+}
+
+.dashboard-page {
+	min-height: 100vh;
+	background: radial-gradient(
+		circle at 80% 8%,
+		rgba(0, 122, 115, 0.14) 0%,
+		var(--bg) 50%
+	);
+}
+
+.dashboard-header {
+	padding: 5.6rem 0 1.6rem;
+	border-bottom: 1px solid var(--card-border);
+}
+
+.dashboard-header-inner {
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-end;
+	gap: 1.2rem;
+	flex-wrap: wrap;
+}
+
+.dashboard-header h1 {
+	font-size: clamp(1.8rem, 3.3vw, 2.8rem);
+	line-height: 1.1;
+	margin-bottom: 0.4rem;
+}
+
+.dashboard-header p {
+	color: var(--text-muted);
+	word-break: break-word;
+}
+
+.dashboard-body {
+	padding-top: 2.2rem;
+	padding-bottom: 4rem;
+	background: transparent;
+}
+
+.dashboard-card {
+	background: rgba(255, 255, 255, 0.03);
+	border: 1px solid var(--card-border);
+	border-radius: 20px;
+	padding: 1.25rem;
+}
+
+.dashboard-card h2 {
+	font-size: clamp(1.3rem, 2vw, 1.8rem);
+	margin-bottom: 0.6rem;
+}
+
+.dashboard-card p {
+	color: var(--text-muted);
+	margin-bottom: 0.8rem;
+}
+
+.dashboard-list {
+	list-style: none;
+	display: grid;
+	gap: 0.4rem;
+	color: #e7e7e7;
+	font-size: 0.95rem;
+}
+
+.dashboard-list li::before {
+	content: "• ";
+	color: var(--primary);
+}
+
+.rbac-table-wrap {
+	overflow-x: auto;
+	border: 1px solid var(--card-border);
+	border-radius: 14px;
+	padding: 0.5rem;
+	background: rgba(255, 255, 255, 0.02);
+}
+
+.rbac-table {
+	width: 100%;
+	border-collapse: collapse;
+	font-size: 0.92rem;
+	min-width: 640px;
+}
+
+.rbac-table th,
+.rbac-table td {
+	text-align: left;
+	padding: 0.72rem 0.65rem;
+	border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.rbac-table th {
+	color: var(--text-muted);
+	font-weight: 700;
+	text-transform: uppercase;
+	font-size: 0.76rem;
+	letter-spacing: 0.06em;
+}
+
+.rbac-table tr:last-child td {
+	border-bottom: 0;
+}
+
+.role-badge {
+	display: inline-flex;
+	padding: 0.25rem 0.55rem;
+	border-radius: 999px;
+	font-size: 0.76rem;
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: 0.05em;
+	border: 1px solid transparent;
+}
+
+.role-badge.user {
+	background: rgba(0, 179, 164, 0.12);
+	border-color: rgba(0, 179, 164, 0.4);
+	color: #7ae9df;
+}
+
+.role-badge.staff {
+	background: rgba(255, 59, 59, 0.14);
+	border-color: rgba(255, 59, 59, 0.4);
+	color: #ffb7b7;
+}
+
+.btn-small {
+	padding: 0.45rem 0.82rem;
+	font-size: 0.82rem;
+}
+
 @media (max-width: 900px) {
 	.dual-col {
 		grid-template-columns: 1fr;
@@ -818,6 +1052,15 @@ h4 {
 	}
 	.hall-card img {
 		height: 280px;
+	}
+	.auth-shell {
+		grid-template-columns: 1fr;
+	}
+	.auth-copy {
+		order: 1;
+	}
+	.auth-card {
+		order: 2;
 	}
 }
 
