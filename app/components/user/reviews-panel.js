@@ -24,7 +24,10 @@ function stars(rating) {
 	return "★".repeat(safe) + "☆".repeat(5 - safe);
 }
 
-export default function ReviewsPanel() {
+export default function ReviewsPanel({
+	title = "Member Reviews",
+	description = "Share your gym experience and help new members choose confidently.",
+}) {
 	const [rating, setRating] = useState(5);
 	const [comment, setComment] = useState("");
 	const [reviews, setReviews] = useState([]);
@@ -108,10 +111,8 @@ export default function ReviewsPanel() {
 			className="dashboard-card reviews-card"
 			aria-label="Member reviews">
 			<div className="reviews-head">
-				<h2>Member Reviews</h2>
-				<p>
-					Share your gym experience and help new members choose confidently.
-				</p>
+				<h2>{title}</h2>
+				<p>{description}</p>
 			</div>
 
 			<form className="reviews-form" onSubmit={submitReview}>

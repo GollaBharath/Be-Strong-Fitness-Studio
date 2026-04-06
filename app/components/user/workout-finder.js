@@ -17,7 +17,10 @@ function toList(values) {
 	return values;
 }
 
-export default function WorkoutFinder() {
+export default function WorkoutFinder({
+	title = "Workout Finder",
+	description = "Search ExerciseDB for GIF demos and quick training cues.",
+}) {
 	const [query, setQuery] = useState("");
 	const [mode, setMode] = useState("auto");
 	const [loading, setLoading] = useState(false);
@@ -74,8 +77,8 @@ export default function WorkoutFinder() {
 			className="dashboard-card exercise-card"
 			aria-label="Workout finder">
 			<div className="exercise-head">
-				<h2>Workout Finder</h2>
-				<p>Search ExerciseDB for GIF demos and quick training cues.</p>
+				<h2>{title}</h2>
+				<p>{description}</p>
 			</div>
 
 			<form className="exercise-search" onSubmit={searchWorkouts}>

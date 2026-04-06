@@ -1,4 +1,5 @@
 import "./globals.css";
+import SiteNavbar from "./components/navigation/site-navbar";
 
 export const metadata = {
 	title: "BE STRONG FITNESS STUDIO | Master Your Body",
@@ -9,7 +10,10 @@ export const metadata = {
 export default function RootLayout({ children }) {
 	return (
 		<html lang="en" suppressHydrationWarning>
-			<body suppressHydrationWarning>{children}</body>
+			<body suppressHydrationWarning>
+				<SiteNavbar />
+				{children}
+			</body>
 		</html>
 	);
 }

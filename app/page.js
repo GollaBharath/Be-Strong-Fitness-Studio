@@ -270,32 +270,6 @@ export default function HomePage() {
 
 	return (
 		<>
-			<header className="main-header">
-				<div className="container header-container">
-					<div className="logo-group">
-						<img
-							src="/logo.jpg"
-							alt="Be Strong Fitness Studio"
-							className="brand-logo"
-						/>
-						<div className="brand-text">
-							<span className="brand-title">BE STRONG</span>
-							<span className="brand-subtitle">FITNESS STUDIO</span>
-						</div>
-					</div>
-					<nav className="main-nav">
-						<a href="#packages">Memberships</a>
-						<a href="#facilities">Facilities</a>
-						<Link href="/transformations">Hall of Fame</Link>
-						<Link href="/login">Login</Link>
-						<a href="#timings">Timings</a>
-						<a href="#cta" className="nav-join-btn">
-							Join Now
-						</a>
-					</nav>
-				</div>
-			</header>
-
 			<main>
 				<section className="hero-scrub-container" id="hero-scrub">
 					<div className="sticky-container">
@@ -506,9 +480,9 @@ export default function HomePage() {
 					<div className="container text-center fade-up">
 						<h2 className="cta-title">Start Your Fitness Journey Today</h2>
 						<div className="cta-buttons">
-							<a href="#packages" className="btn primary">
+							<Link href="/login" className="btn primary">
 								Join Now
-							</a>
+							</Link>
 							<a
 								href="https://wa.me/1234567890"
 								target="_blank"

@@ -42,7 +42,10 @@ function profileFromApi(profile) {
 	};
 }
 
-export default function GoalPlanner() {
+export default function GoalPlanner({
+	title = "Goal Planner",
+	description = "Save your body details once, choose your target, and get a food + exercise plan instantly.",
+}) {
 	const [profile, setProfile] = useState(INITIAL_PROFILE);
 	const [goals, setGoals] = useState([]);
 	const [selectedGoal, setSelectedGoal] = useState("");
@@ -84,6 +87,9 @@ export default function GoalPlanner() {
 				setGoals(Array.isArray(payload?.goals) ? payload.goals : []);
 				setSelectedGoal(String(payload?.selectedGoal ?? ""));
 				setPlan(payload?.plan ?? null);
+				if (payload?.error) {
+					setError(String(payload.error));
+				}
 			} catch {
 				if (active) {
 					setError("Unable to load planner data.");
@@ -169,7 +175,7 @@ export default function GoalPlanner() {
 			<section
 				className="dashboard-card goal-planner-card"
 				aria-label="Goal planner">
-				<h2>Goal Planner</h2>
+				<h2>{title}</h2>
 				<p>Loading your saved details...</p>
 			</section>
 		);
@@ -180,11 +186,8 @@ export default function GoalPlanner() {
 			className="dashboard-card goal-planner-card"
 			aria-label="Goal planner">
 			<div className="goal-planner-head">
-				<h2>Goal Planner</h2>
-				<p>
-					Save your body details once, choose your target, and get a food +
-					exercise plan instantly.
-				</p>
+				<h2>{title}</h2>
+				<p>{description}</p>
 			</div>
 
 			<form className="goal-profile-form" onSubmit={saveProfile}>

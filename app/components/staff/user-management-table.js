@@ -4,7 +4,8 @@ import { useMemo, useState } from "react";
 
 export default function UserManagementTable({ initialUsers, currentUid }) {
 	const [users, setUsers] = useState(initialUsers);
-	const [busyUid, setBusyUid] = useState(null);
+	const [selectedUser, setSelectedUser] = useState(null);
+	const [busyAction, setBusyAction] = useState("");
 	const [message, setMessage] = useState("");
 
 	const sortedUsers = useMemo(
@@ -17,7 +18,7 @@ export default function UserManagementTable({ initialUsers, currentUid }) {
 
 	const updateRole = async (uid, role) => {
 		setMessage("");
-		setBusyUid(uid);
+		setBusyAction("role");
 		try {
 			const response = await fetch(`/api/staff/users/${uid}/role`, {
 				method: "PATCH",
@@ -32,11 +33,36 @@ export default function UserManagementTable({ initialUsers, currentUid }) {
 			setUsers((prev) =>
 				prev.map((user) => (user.uid === uid ? { ...user, role } : user)),
 			);
+			setSelectedUser((prev) =>
+				prev && prev.uid === uid ? { ...prev, role } : prev,
+			);
 			setMessage("Role updated.");
 		} catch {
 			setMessage("Unable to update role.");
 		} finally {
-			setBusyUid(null);
+			setBusyAction("");
+		}
+	};
+
+	const deleteUser = async (uid) => {
+		setMessage("");
+		setBusyAction("delete");
+		try {
+			const response = await fetch(`/api/staff/users/${uid}`, {
+				method: "DELETE",
+			});
+
+			if (!response.ok) {
+				throw new Error("Delete failed");
+			}
+
+			setUsers((prev) => prev.filter((user) => user.uid !== uid));
+			setSelectedUser(null);
+			setMessage("User deleted.");
+		} catch {
+			setMessage("Unable to delete user.");
+		} finally {
+			setBusyAction("");
 		}
 	};
 
@@ -54,9 +80,6 @@ export default function UserManagementTable({ initialUsers, currentUid }) {
 				</thead>
 				<tbody>
 					{sortedUsers.map((user) => {
-						const disabled = busyUid === user.uid || user.uid === currentUid;
-						const nextRole = user.role === "staff" ? "user" : "staff";
-
 						return (
 							<tr key={user.uid}>
 								<td>{user.email ?? "-"}</td>
@@ -68,13 +91,8 @@ export default function UserManagementTable({ initialUsers, currentUid }) {
 									<button
 										type="button"
 										className="btn secondary btn-small"
-										onClick={() => updateRole(user.uid, nextRole)}
-										disabled={disabled}>
-										{busyUid === user.uid
-											? "Saving..."
-											: user.uid === currentUid
-												? "Current Account"
-												: `Make ${nextRole}`}
+										onClick={() => setSelectedUser(user)}>
+										Edit
 									</button>
 								</td>
 							</tr>
@@ -82,6 +100,70 @@ export default function UserManagementTable({ initialUsers, currentUid }) {
 					})}
 				</tbody>
 			</table>
+
+			{selectedUser ? (
+				<div
+					className="staff-modal-overlay"
+					onClick={() => setSelectedUser(null)}
+					role="presentation">
+					<div
+						className="staff-modal"
+						onClick={(event) => event.stopPropagation()}
+						role="dialog"
+						aria-modal="true"
+						aria-label="Edit user">
+						<div className="staff-modal-head">
+							<h3>Edit User</h3>
+							<button
+								type="button"
+								className="btn secondary btn-small"
+								onClick={() => setSelectedUser(null)}>
+								Close
+							</button>
+						</div>
+
+						<p className="staff-modal-copy">
+							{selectedUser.email ?? "No email"}
+						</p>
+						<p className="staff-modal-copy muted">
+							Current role: {selectedUser.role}
+						</p>
+
+						<div className="staff-modal-actions">
+							<button
+								type="button"
+								className="btn secondary"
+								disabled={busyAction !== "" || selectedUser.uid === currentUid}
+								onClick={() =>
+									updateRole(
+										selectedUser.uid,
+										selectedUser.role === "staff" ? "user" : "staff",
+									)
+								}>
+								{busyAction === "role"
+									? "Saving..."
+									: selectedUser.role === "staff"
+										? "Make User"
+										: "Make Staff"}
+							</button>
+
+							<button
+								type="button"
+								className="btn secondary staff-delete-btn"
+								disabled={busyAction !== "" || selectedUser.uid === currentUid}
+								onClick={() => deleteUser(selectedUser.uid)}>
+								{busyAction === "delete" ? "Deleting..." : "Delete User"}
+							</button>
+						</div>
+
+						{selectedUser.uid === currentUid ? (
+							<p className="staff-modal-copy muted">
+								You cannot change or delete your own account.
+							</p>
+						) : null}
+					</div>
+				</div>
+			) : null}
 		</div>
 	);
 }

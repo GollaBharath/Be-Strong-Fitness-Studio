@@ -98,8 +98,12 @@ export default function LoginForm() {
 			throw sessionError;
 		}
 
+		const payload = await response.json().catch(() => ({}));
+		const nextPath =
+			payload?.role === "staff" ? "/dashboard/staff" : "/dashboard/user";
+
 		await signOut(auth);
-		router.push("/dashboard");
+		router.push(nextPath);
 		router.refresh();
 	};
 

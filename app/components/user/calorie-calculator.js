@@ -23,7 +23,10 @@ function metricValue(value, unit) {
 	return `${value} ${unit}`;
 }
 
-export default function CalorieCalculator() {
+export default function CalorieCalculator({
+	title = "Calorie Calculator",
+	description = "Search a food or dish to get calories and nutrients.",
+}) {
 	const [query, setQuery] = useState("");
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState("");
@@ -74,8 +77,8 @@ export default function CalorieCalculator() {
 			className="dashboard-card calorie-card"
 			aria-label="Calorie calculator">
 			<div className="calorie-head">
-				<h2>Calorie Calculator</h2>
-				<p>Search a food or dish to get calories and nutrients.</p>
+				<h2>{title}</h2>
+				<p>{description}</p>
 			</div>
 
 			<form className="calorie-search" onSubmit={onSearch}>

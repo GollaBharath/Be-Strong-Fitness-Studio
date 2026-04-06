@@ -10,7 +10,7 @@ export const metadata = {
 export default async function LoginPage() {
 	const session = await getSessionContext();
 	if (session) {
-		redirect("/dashboard");
+		redirect(session.role === "staff" ? "/dashboard/staff" : "/dashboard/user");
 	}
 
 	return (

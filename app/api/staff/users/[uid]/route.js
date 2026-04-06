@@ -1,9 +1,9 @@
 import { NextResponse } from "next/server";
 import { getSessionContext } from "@/lib/auth/server";
-import { ALLOWED_ROLES, USER_ROLES } from "@/lib/constants/auth";
-import { adminAuth } from "@/lib/firebase/admin";
+import { USER_ROLES } from "@/lib/constants/auth";
+import { adminAuth, adminDb } from "@/lib/firebase/admin";
 
-export async function PATCH(request, { params }) {
+export async function DELETE(_request, { params }) {
 	try {
 		const staff = await getSessionContext();
 		if (!staff) {
@@ -15,36 +15,28 @@ export async function PATCH(request, { params }) {
 		}
 
 		const { uid } = params;
-		const body = await request.json();
-		const role = body?.role;
-
 		if (!uid || typeof uid !== "string") {
 			return NextResponse.json({ error: "Invalid user id." }, { status: 400 });
 		}
 
 		if (uid === staff.uid) {
 			return NextResponse.json(
-				{ error: "You cannot change your own role." },
+				{ error: "You cannot delete your own account." },
 				{ status: 400 },
 			);
 		}
 
-		if (!ALLOWED_ROLES.has(role)) {
-			return NextResponse.json({ error: "Invalid role." }, { status: 400 });
-		}
-
-		const userRecord = await adminAuth.getUser(uid);
-		const currentClaims = userRecord.customClaims ?? {};
-
-		await adminAuth.setCustomUserClaims(uid, {
-			...currentClaims,
-			role,
-		});
+		await adminAuth.deleteUser(uid);
+		await adminDb.collection("userMemberships").doc(uid).delete();
 
 		return NextResponse.json({ ok: true });
-	} catch {
+	} catch (error) {
+		if (error?.code === "auth/user-not-found") {
+			return NextResponse.json({ error: "User not found." }, { status: 404 });
+		}
+
 		return NextResponse.json(
-			{ error: "Unable to update role." },
+			{ error: "Unable to delete user." },
 			{ status: 500 },
 		);
 	}

@@ -19,7 +19,10 @@ function formatDate(value) {
 	});
 }
 
-export default function MembershipCheckout() {
+export default function MembershipCheckout({
+	title = "Membership Checkout",
+	description = "Placeholder checkout is enabled. Payments will be integrated with Stripe later.",
+}) {
 	const [plans, setPlans] = useState([]);
 	const [membership, setMembership] = useState(null);
 	const [loading, setLoading] = useState(true);
@@ -104,11 +107,8 @@ export default function MembershipCheckout() {
 			className="dashboard-card membership-card"
 			aria-label="Membership checkout">
 			<div className="membership-head">
-				<h2>Membership Checkout</h2>
-				<p>
-					Placeholder checkout is enabled. Payments will be integrated with
-					Stripe later.
-				</p>
+				<h2>{title}</h2>
+				<p>{description}</p>
 			</div>
 
 			<div className="membership-current">

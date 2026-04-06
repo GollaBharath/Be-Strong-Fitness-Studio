@@ -297,10 +297,13 @@ export async function GET() {
 		return NextResponse.json(cleanDocument(snapshot.data()));
 	} catch (error) {
 		console.error("[planner:get]", error);
-		return NextResponse.json(
-			{ error: getPlannerErrorMessage(error) },
-			{ status: 500 },
-		);
+		return NextResponse.json({
+			profile: null,
+			goals: [],
+			selectedGoal: null,
+			plan: null,
+			error: getPlannerErrorMessage(error),
+		});
 	}
 }
 
