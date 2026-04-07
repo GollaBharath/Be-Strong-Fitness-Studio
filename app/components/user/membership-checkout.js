@@ -37,6 +37,30 @@ export default function MembershipCheckout({
 		return `${membership.planTitle} (${membership.status || "unknown"})`;
 	}, [membership]);
 
+	const sortedPlans = useMemo(() => {
+		return [...plans].sort((a, b) => a.durationMonths - b.durationMonths);
+	}, [plans]);
+
+	const baseMonthlyPrice = useMemo(() => {
+		const oneMonth = sortedPlans.find((plan) => plan.durationMonths === 1);
+		if (oneMonth?.priceInr) {
+			return oneMonth.priceInr;
+		}
+		if (!sortedPlans[0]?.durationMonths) {
+			return 0;
+		}
+		return Math.round(sortedPlans[0].priceInr / sortedPlans[0].durationMonths);
+	}, [sortedPlans]);
+
+	const featuredPlanId = useMemo(() => {
+		const sixMonth = sortedPlans.find((plan) => plan.durationMonths === 6);
+		if (sixMonth) {
+			return sixMonth.id;
+		}
+		const fallback = sortedPlans[Math.floor(sortedPlans.length / 2)];
+		return fallback?.id ?? "";
+	}, [sortedPlans]);
+
 	useEffect(() => {
 		let active = true;
 
@@ -121,20 +145,60 @@ export default function MembershipCheckout({
 
 			{loading ? <p className="exercise-empty">Loading plans...</p> : null}
 
-			<div className="membership-grid">
-				{plans.map((plan) => {
-					const disabled = busyPlanId === plan.id;
+			<div className="membership-pricing-grid">
+				{sortedPlans.map((plan) => {
+					const processing = busyPlanId === plan.id;
+					const isFeatured = plan.id === featuredPlanId;
+					const isActivePlan = membership?.planTitle === plan.title;
+					const monthlyPrice = Math.round(plan.priceInr / plan.durationMonths);
+					const savingsPercent =
+						baseMonthlyPrice > 0
+							? Math.max(
+									0,
+									Math.round((1 - monthlyPrice / baseMonthlyPrice) * 100),
+								)
+							: 0;
+					const disabled = processing || isActivePlan;
+
 					return (
-						<article className="membership-item" key={plan.id}>
-							<h3>{plan.title}</h3>
+						<article
+							className={`membership-plan-card${isFeatured ? " featured" : ""}`}
+							key={plan.id}>
+							<div className="membership-plan-top">
+								<h3>{plan.title}</h3>
+								{isActivePlan ? (
+									<span className="membership-plan-badge active">Active</span>
+								) : isFeatured ? (
+									<span className="membership-plan-badge">Most Popular</span>
+								) : null}
+							</div>
+
 							<p className="membership-price">Rs {plan.priceInr}</p>
-							<p>{plan.durationMonths} month access</p>
+							<p className="membership-per-month">Rs {monthlyPrice}/month</p>
+							<p className="membership-duration">
+								{plan.durationMonths} month access
+							</p>
+
+							{savingsPercent > 0 ? (
+								<p className="membership-savings">
+									Save {savingsPercent}% vs monthly plan
+								</p>
+							) : (
+								<p className="membership-savings muted">
+									Flexible starter plan
+								</p>
+							)}
+
 							<button
 								type="button"
 								className="btn primary membership-checkout-btn"
 								onClick={() => checkout(plan.id)}
 								disabled={disabled}>
-								{disabled ? "Processing..." : "Checkout"}
+								{processing
+									? "Processing..."
+									: isActivePlan
+										? "Current Plan"
+										: "Checkout"}
 							</button>
 						</article>
 					);

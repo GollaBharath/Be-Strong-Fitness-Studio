@@ -1,5 +1,13 @@
 @import url("https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap");
 
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.bg-gradient-radial {
+	background-image: radial-gradient(var(--tw-gradient-stops));
+}
+
 :root {
 	--bg: #0b0b0b;
 	--primary: #00b3a4;
@@ -70,8 +78,8 @@ h4 {
 	align-items: center;
 	max-width: none;
 	width: 100%;
-	padding-left: 0;
-	padding-right: 0;
+	padding-left: 1rem;
+	padding-right: 1rem;
 }
 
 .logo-group {
@@ -226,6 +234,63 @@ h4 {
 	color: var(--primary);
 }
 
+.dashboard-nav-bar {
+	display: flex;
+	align-items: center;
+	gap: 0.6rem;
+	flex-wrap: wrap;
+	justify-content: center;
+	margin: 0 1rem;
+}
+
+.dashboard-nav-item {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.5rem;
+	padding: 0.55rem 0.9rem;
+	border-radius: 999px;
+	border: 1px solid transparent;
+	background: transparent;
+	color: var(--text-muted);
+	font: inherit;
+	font-size: 0.88rem;
+	font-weight: 700;
+	line-height: 1;
+	letter-spacing: 0.03em;
+	cursor: pointer;
+	transition:
+		color 0.2s ease,
+		background 0.2s ease,
+		border-color 0.2s ease,
+		transform 0.2s ease;
+}
+
+.dashboard-nav-item:hover {
+	color: var(--text);
+	background: rgba(255, 255, 255, 0.06);
+	border-color: rgba(255, 255, 255, 0.12);
+}
+
+.dashboard-nav-item.active {
+	color: var(--text);
+	background: rgba(0, 179, 164, 0.14);
+	border-color: rgba(0, 179, 164, 0.45);
+}
+
+.dashboard-nav-item .nav-icon {
+	width: 16px;
+	height: 16px;
+	flex: 0 0 auto;
+}
+
+.dashboard-nav-item span {
+	white-space: nowrap;
+}
+
+.user-actions {
+	margin-left: auto;
+}
+
 @media (max-width: 900px) {
 	.sticky-container {
 		height: 50vh;
@@ -294,6 +359,14 @@ h4 {
 	}
 	.support-links {
 		padding: 0.9rem;
+	}
+	.dashboard-nav-bar {
+		gap: 0.45rem;
+		margin: 0 0.5rem;
+	}
+	.dashboard-nav-item {
+		padding: 0.45rem 0.65rem;
+		font-size: 0.8rem;
 	}
 }
 
@@ -2063,35 +2136,115 @@ h4 {
 	font-size: 0.9rem;
 }
 
-.membership-grid {
+.membership-pricing-grid {
 	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-	gap: 0.7rem;
+	grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+	gap: 0.75rem;
 }
 
-.membership-item {
-	padding: 0.8rem;
-	border-radius: 14px;
+.membership-plan-card {
+	padding: 0.9rem;
+	border-radius: 16px;
 	border: 1px solid var(--card-border);
-	background: rgba(255, 255, 255, 0.02);
+	background: linear-gradient(
+		180deg,
+		rgba(255, 255, 255, 0.04),
+		rgba(255, 255, 255, 0.015)
+	);
 	display: grid;
-	gap: 0.45rem;
+	gap: 0.48rem;
+	transition:
+		transform 0.22s ease,
+		border-color 0.22s ease,
+		box-shadow 0.22s ease;
 }
 
-.membership-item h3 {
+.membership-plan-card:hover {
+	transform: translateY(-2px);
+	border-color: rgba(0, 179, 164, 0.38);
+	box-shadow: 0 10px 24px rgba(0, 179, 164, 0.12);
+}
+
+.membership-plan-card.featured {
+	border-color: rgba(0, 179, 164, 0.5);
+	box-shadow: 0 12px 28px rgba(0, 179, 164, 0.16);
+	background:
+		radial-gradient(
+			circle at top right,
+			rgba(0, 179, 164, 0.12),
+			transparent 42%
+		),
+		linear-gradient(
+			180deg,
+			rgba(255, 255, 255, 0.045),
+			rgba(255, 255, 255, 0.015)
+		);
+}
+
+.membership-plan-top {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	gap: 0.5rem;
+}
+
+.membership-plan-top h3 {
 	font-size: 1rem;
 	line-height: 1.2;
 }
 
+.membership-plan-badge {
+	font-size: 0.67rem;
+	text-transform: uppercase;
+	letter-spacing: 0.08em;
+	font-weight: 700;
+	padding: 0.2rem 0.45rem;
+	border-radius: 999px;
+	background: rgba(0, 179, 164, 0.16);
+	border: 1px solid rgba(0, 179, 164, 0.4);
+	color: #9af6ef;
+	white-space: nowrap;
+}
+
+.membership-plan-badge.active {
+	background: rgba(255, 255, 255, 0.1);
+	border-color: rgba(255, 255, 255, 0.2);
+	color: #fff;
+}
+
 .membership-price {
 	margin: 0;
-	font-size: 1.12rem;
-	font-weight: 700;
+	font-size: 1.5rem;
+	font-weight: 800;
 	color: #9af6ef;
 }
 
+.membership-per-month {
+	margin: 0;
+	font-size: 0.86rem;
+	color: var(--text-muted);
+}
+
+.membership-duration {
+	margin: 0;
+	font-size: 0.96rem;
+}
+
+.membership-savings {
+	margin: 0;
+	font-size: 0.82rem;
+	font-weight: 600;
+	color: #9af6ef;
+}
+
+.membership-savings.muted {
+	font-weight: 500;
+	color: var(--text-muted);
+}
+
 .membership-checkout-btn {
-	padding: 0.62rem 1rem;
+	margin-top: 0.2rem;
+	padding: 0.65rem 1rem;
 	border: 0;
 	cursor: pointer;
 }

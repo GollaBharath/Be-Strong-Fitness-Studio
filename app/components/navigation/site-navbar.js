@@ -19,6 +19,11 @@ export default function SiteNavbar() {
 	const isUserDashboard = pathname.startsWith("/dashboard/user");
 	const isLogin = pathname.startsWith("/login");
 	const isStaffDashboard = pathname.startsWith("/dashboard/staff");
+
+	if (isLogin || isUserDashboard) {
+		return null;
+	}
+
 	const staffTabs = [
 		{ label: "User Management", href: "/dashboard/staff/users" },
 		{ label: "Member Management", href: "/dashboard/staff/memberships" },
